@@ -43,10 +43,11 @@ namespace MySimpleNotes
                 {
                     //create text files
                     ExportDataToTXT(this.richTextBox1.Text, myPath);
-                    if (File.Exists(myLastLocation) == false)
-                    {
-                      ExportDataToTXT(("" + this.Location.X + "," + this.Location.Y), myLastLocation);
-                    }
+                    ExportDataToTXT(("" + this.Location.X + "," + this.Location.Y), myLastLocation);
+                    //if (File.Exists(myLastLocation) == false)
+                    //{
+                      
+                    //}
                 }
             }
             catch (Exception ex)
