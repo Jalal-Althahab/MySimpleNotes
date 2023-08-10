@@ -36,6 +36,8 @@ namespace MySimpleNotes
                 if (File.Exists(myPath))
                 {
                     this.richTextBox1.Text = "" + ImportDataFromTXT(myPath);
+                    //Get start from last text point...
+                    this.richTextBox1.SelectionStart=this.richTextBox1.TextLength;              
                     //get last location
                     this.Location = new Point(int.Parse(ImportDataFromTXT(myLastLocation).Split(',')[0]), int.Parse(ImportDataFromTXT(myLastLocation).Split(',')[1]));
                 }
