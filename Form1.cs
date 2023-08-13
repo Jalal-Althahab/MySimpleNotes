@@ -108,9 +108,10 @@ namespace MySimpleNotes
                 Application.Exit();
             }
             else
-            {
-                if (KeyCodes.Contains(e.KeyValue) || (e.KeyCode == Keys.V && e.Control))
+            {    //KeyCodes.Contains(e.KeyValue) ||
+                if ((e.KeyCode == Keys.S) && e.Control)
                 {
+                   // MessageBox.Show("Save is done!");
                     e.SuppressKeyPress = false;
                     this.richTextBox1_DoubleClick(sender, e);
                 }
