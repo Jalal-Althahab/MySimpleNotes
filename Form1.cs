@@ -15,7 +15,7 @@ namespace MySimpleNotes
     {
         static readonly string myPath = @"C:\MySimpleNotes\MySimpleNotes_AllText.txt";
         static readonly string myLastLocation = @"C:\MySimpleNotes\MySimpleNotes_LastLocation.txt";
-        public List<int> KeyCodes = new List<int>() { 8, 17, 37, 39 };
+        //public List<int> KeyCodes = new List<int>() { 8, 17, 37, 39 };
 
         public Form1()
         {
@@ -92,6 +92,12 @@ namespace MySimpleNotes
             try
             {   // save the notes to text file in the path
                 ExportDataToTXT(this.richTextBox1.Text, myPath);
+                //ask for exit...
+                DialogResult tempDg = MessageBox.Show(this, "done!,do you want to exit?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (tempDg == DialogResult.Yes)
+                {
+                    Application.Exit();
+                }
             }
             catch (Exception ex)
             {
@@ -107,17 +113,17 @@ namespace MySimpleNotes
                 // then close the app 
                 Application.Exit();
             }
-            else
-            {    //KeyCodes.Contains(e.KeyValue) ||
-                if ((e.KeyCode == Keys.S) && e.Control)
-                {
-                   // MessageBox.Show("Save is done!");
-                    e.SuppressKeyPress = false;
-                    this.richTextBox1_DoubleClick(sender, e);
-                }
-                else
-                    e.SuppressKeyPress = true;
-            }
+
+            //else
+            //{
+            //    if (KeyCodes.Contains(e.KeyValue) || (e.KeyCode == Keys.S && e.Control))
+            //    {
+            //        e.SuppressKeyPress = false;
+            //        this.richTextBox1_DoubleClick(sender, e);
+            //    }
+            //    else
+            //        e.SuppressKeyPress = true;
+            //}
         }
         private void MoveCursor()
         {
@@ -153,6 +159,14 @@ namespace MySimpleNotes
             {
                 this.MoveCursor();
             }
+        }
+
+        private void richTextBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {    // '1245203' this is a HachCode value of (ControlKey+S) at same time.
+            if (e.KeyChar.GetHashCode() == (1245203))
+            {
+                this.richTextBox1_DoubleClick(sender, e);           
+            }            
         }
     }
 }
