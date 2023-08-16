@@ -15,7 +15,6 @@ namespace MySimpleNotes
     {
         static readonly string myPath = @"C:\MySimpleNotes\MySimpleNotes_AllText.txt";
         static readonly string myLastLocation = @"C:\MySimpleNotes\MySimpleNotes_LastLocation.txt";
-        //public List<int> KeyCodes = new List<int>() { 8, 17, 37, 39 };
 
         public Form1()
         {
@@ -46,10 +45,6 @@ namespace MySimpleNotes
                     //create text files
                     ExportDataToTXT(this.richTextBox1.Text, myPath);
                     ExportDataToTXT(("" + this.Location.X + "," + this.Location.Y), myLastLocation);
-                    //if (File.Exists(myLastLocation) == false)
-                    //{
-                      
-                    //}
                 }
             }
             catch (Exception ex)
@@ -113,17 +108,6 @@ namespace MySimpleNotes
                 // then close the app 
                 Application.Exit();
             }
-
-            //else
-            //{
-            //    if (KeyCodes.Contains(e.KeyValue) || (e.KeyCode == Keys.S && e.Control))
-            //    {
-            //        e.SuppressKeyPress = false;
-            //        this.richTextBox1_DoubleClick(sender, e);
-            //    }
-            //    else
-            //        e.SuppressKeyPress = true;
-            //}
         }
         private void MoveCursor()
         {
@@ -162,11 +146,22 @@ namespace MySimpleNotes
         }
 
         private void richTextBox1_KeyPress(object sender, KeyPressEventArgs e)
-        {    // '1245203' this is a HachCode value of (ControlKey+S) at same time.
+        {    // '1245203' this is a HashCode value of (ControlKey+S) at same time.
             if (e.KeyChar.GetHashCode() == (1245203))
             {
                 this.richTextBox1_DoubleClick(sender, e);           
-            }            
+            }
+            //maximize font size (ShiftKey & '+')
+            else if (e.KeyChar.GetHashCode() == (2818091))
+            {
+                this.richTextBox1.Font = new Font("Tahoma", (this.richTextBox1.Font.Size + 1), FontStyle.Bold);
+            }
+            //minimize font size (ShiftKey & '-')
+            else if (e.KeyChar.GetHashCode() == (6226015))
+            {
+                this.richTextBox1.Font = new Font("Tahoma", (this.richTextBox1.Font.Size - 1), FontStyle.Bold);
+            }
+           // MessageBox.Show("HashCode:" + e.KeyChar.GetHashCode());
         }
     }
 }
