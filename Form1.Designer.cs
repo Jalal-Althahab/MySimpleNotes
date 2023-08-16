@@ -36,11 +36,14 @@ namespace MySimpleNotes
             // 
             this.richTextBox1.BackColor = System.Drawing.Color.DarkSlateGray;
             this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBox1.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Bold);
             this.richTextBox1.ForeColor = System.Drawing.Color.White;
-            this.richTextBox1.Location = new System.Drawing.Point(1, 2);
+            this.richTextBox1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.richTextBox1.Location = new System.Drawing.Point(0, 0);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(241, 130);
+            this.richTextBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.richTextBox1.Size = new System.Drawing.Size(244, 135);
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
             this.richTextBox1.DoubleClick += new System.EventHandler(this.richTextBox1_DoubleClick);
@@ -58,7 +61,8 @@ namespace MySimpleNotes
             this.ClientSize = new System.Drawing.Size(244, 135);
             this.Controls.Add(this.richTextBox1);
             this.ForeColor = System.Drawing.Color.White;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.IsMdiContainer = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form1";
@@ -66,7 +70,7 @@ namespace MySimpleNotes
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Form1";
+            this.Text = "MySimpleNotes";
             this.ResumeLayout(false);
 
         }
