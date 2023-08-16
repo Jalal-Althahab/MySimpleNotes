@@ -36,15 +36,20 @@ namespace MySimpleNotes
                 {
                     this.richTextBox1.Text = "" + ImportDataFromTXT(myPath);
                     //Get start from last text point...
-                    this.richTextBox1.SelectionStart=this.richTextBox1.TextLength;              
+                    this.richTextBox1.SelectionStart=this.richTextBox1.TextLength;
                     //get last location
-                    this.Location = new Point(int.Parse(ImportDataFromTXT(myLastLocation).Split(',')[0]), int.Parse(ImportDataFromTXT(myLastLocation).Split(',')[1]));
+                    string lastLocationText = ImportDataFromTXT(myLastLocation).Split('|')[0];
+                    this.Location = new Point(int.Parse(lastLocationText.Split(',')[0]), int.Parse(lastLocationText.Split(',')[1]));
+                    //get last form size
+                    string lastFormSizeText = ImportDataFromTXT(myLastLocation).Split('|')[1];
+                    this.MainFormSize(lastFormSizeText.Split(',')[0], lastFormSizeText.Split(',')[1]);
                 }
                 else
                 {
                     //create text files
                     ExportDataToTXT(this.richTextBox1.Text, myPath);
-                    ExportDataToTXT(("" + this.Location.X + "," + this.Location.Y), myLastLocation);
+                    //ExportDataToTXT(("" + this.Location.X + "," + this.Location.Y), myLastLocation);
+                    ExportDataToTXT(("" + this.Location.X + "," + this.Location.Y + "|" + this.Width + "," + this.Height), myLastLocation);
                 }
             }
             catch (Exception ex)
@@ -104,7 +109,7 @@ namespace MySimpleNotes
         private void richTextBox1_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Escape)
-            {   
+            {
                 // then close the app 
                 Application.Exit();
             }
@@ -132,8 +137,8 @@ namespace MySimpleNotes
         {
             if (e.Button == MouseButtons.Middle)
             {
-                // save last location to text file
-                this.ExportDataToTXT(("" + this.Location.X + "," + this.Location.Y), myLastLocation);
+                // save last location and last form size to text file
+                this.ExportDataToTXT(("" + this.Location.X + "," + this.Location.Y+"|"+this.Width+","+this.Height), myLastLocation);
             }
         }
 
@@ -152,16 +157,22 @@ namespace MySimpleNotes
                 this.richTextBox1_DoubleClick(sender, e);           
             }
             //maximize font size (ShiftKey & '+')
-            else if (e.KeyChar.GetHashCode() == (2818091))
-            {
-                this.richTextBox1.Font = new Font("Tahoma", (this.richTextBox1.Font.Size + 1), FontStyle.Bold);
-            }
+            //else if (e.KeyChar.GetHashCode() == (2818091))
+            //{
+            //    this.richTextBox1.Font = new Font("Tahoma", (this.richTextBox1.Font.Size + 1), FontStyle.Bold);
+            //}
             //minimize font size (ShiftKey & '-')
-            else if (e.KeyChar.GetHashCode() == (6226015))
-            {
-                this.richTextBox1.Font = new Font("Tahoma", (this.richTextBox1.Font.Size - 1), FontStyle.Bold);
-            }
+            //else if (e.KeyChar.GetHashCode() == (6226015))
+            //{
+            //    this.richTextBox1.Font = new Font("Tahoma", (this.richTextBox1.Font.Size - 1), FontStyle.Bold);
+            //}
            // MessageBox.Show("HashCode:" + e.KeyChar.GetHashCode());
+        }
+
+        //restore the form size 
+        public void MainFormSize(string width,string height)
+        {
+            this.Size = new Size(int.Parse(width),int.Parse(height));
         }
     }
 }
