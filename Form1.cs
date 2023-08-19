@@ -96,6 +96,7 @@ namespace MySimpleNotes
                 DialogResult tempDg = MessageBox.Show(this, "done!,do you want to exit?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (tempDg == DialogResult.Yes)
                 {
+                    this.ExportDataToTXT(("" + this.Location.X + "," + this.Location.Y + "|" + this.Width + "," + this.Height), myLastLocation);
                     Application.Exit();
                 }
             }
