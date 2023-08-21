@@ -48,7 +48,6 @@ namespace MySimpleNotes
                 {
                     //create text files
                     ExportDataToTXT(this.richTextBox1.Text, myPath);
-                    //ExportDataToTXT(("" + this.Location.X + "," + this.Location.Y), myLastLocation);
                     ExportDataToTXT(("" + this.Location.X + "," + this.Location.Y + "|" + this.Width + "," + this.Height), myLastLocation);
                 }
             }
@@ -111,8 +110,9 @@ namespace MySimpleNotes
         {
             if (e.KeyData == Keys.Escape)
             {
+                this.richTextBox1_DoubleClick(sender, e);
                 // then close the app 
-                Application.Exit();
+                //Application.Exit();
             }
         }
         private void MoveCursor()
@@ -129,7 +129,6 @@ namespace MySimpleNotes
             // Determine which mouse button is clicked.
             if (e.Button == MouseButtons.Middle)
             {
-                // this.Location = new System.Drawing.Point(e.Location.X,e.Location.Y);
                 this.MoveCursor();
             }
         }
@@ -157,17 +156,9 @@ namespace MySimpleNotes
             {
                 this.richTextBox1_DoubleClick(sender, e);           
             }
-            //maximize font size (ShiftKey & '+')
-            //else if (e.KeyChar.GetHashCode() == (2818091))
-            //{
-            //    this.richTextBox1.Font = new Font("Tahoma", (this.richTextBox1.Font.Size + 1), FontStyle.Bold);
-            //}
-            //minimize font size (ShiftKey & '-')
-            //else if (e.KeyChar.GetHashCode() == (6226015))
-            //{
-            //    this.richTextBox1.Font = new Font("Tahoma", (this.richTextBox1.Font.Size - 1), FontStyle.Bold);
-            //}
-           // MessageBox.Show("HashCode:" + e.KeyChar.GetHashCode());
+            //maximize font size (ShiftKey & '+') == (2818091)
+            //minimize font size (ShiftKey & '-')== (6226015)         
+            // MessageBox.Show("HashCode:" + e.KeyChar.GetHashCode());
         }
 
         //restore the form size 
