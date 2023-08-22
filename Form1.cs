@@ -85,19 +85,28 @@ namespace MySimpleNotes
             File.WriteAllText((path), csv.ToString(), Encoding.Default);
         }
 
+        private void MySaving()
+        {
+            //ask for Save...
+            DialogResult tempDg = MessageBox.Show(this, "done!,do you want to Save?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (tempDg == DialogResult.Yes)
+            {
+                // save the notes to text file in the path
+                ExportDataToTXT(this.richTextBox1.Text, myPath);
+                this.ExportDataToTXT(("" + this.Location.X + "," + this.Location.Y + "|" + this.Width + "," + this.Height), myLastLocation);
+                Application.Exit();
+            }
+            else
+            {
+                Application.Exit();
+            }
+        }
 
         private void richTextBox1_DoubleClick(object sender, EventArgs e)
         {
             try
-            {   // save the notes to text file in the path
-                ExportDataToTXT(this.richTextBox1.Text, myPath);
-                //ask for exit...
-                DialogResult tempDg = MessageBox.Show(this, "done!,do you want to exit?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (tempDg == DialogResult.Yes)
-                {
-                    this.ExportDataToTXT(("" + this.Location.X + "," + this.Location.Y + "|" + this.Width + "," + this.Height), myLastLocation);
-                    Application.Exit();
-                }
+            {
+                this.MySaving();
             }
             catch (Exception ex)
             {
@@ -110,9 +119,10 @@ namespace MySimpleNotes
         {
             if (e.KeyData == Keys.Escape)
             {
-                this.richTextBox1_DoubleClick(sender, e);
+                //this.richTextBox1_DoubleClick(sender, e);
                 // then close the app 
                 //Application.Exit();
+                this.MySaving();
             }
         }
         private void MoveCursor()
@@ -154,7 +164,8 @@ namespace MySimpleNotes
         {    // '1245203' this is a HashCode value of (ControlKey+S) at same time.
             if (e.KeyChar.GetHashCode() == (1245203))
             {
-                this.richTextBox1_DoubleClick(sender, e);           
+                // this.richTextBox1_DoubleClick(sender, e);        
+                this.MySaving();
             }
             //maximize font size (ShiftKey & '+') == (2818091)
             //minimize font size (ShiftKey & '-')== (6226015)         
@@ -165,6 +176,14 @@ namespace MySimpleNotes
         public void MainFormSize(string width,string height)
         {
             this.Size = new Size(int.Parse(width),int.Parse(height));
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason.ToString() == "UserClosing")
+            {
+                this.MySaving();
+            }
         }
     }
 }
