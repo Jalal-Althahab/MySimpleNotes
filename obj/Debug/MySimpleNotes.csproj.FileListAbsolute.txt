@@ -6,4 +6,3 @@ F:\MyGitHub\MySimpleNotes\obj\Debug\MySimpleNotes.csproj.GenerateResource.cache
 F:\MyGitHub\MySimpleNotes\obj\Debug\MySimpleNotes.csproj.CoreCompileInputs.cache
 F:\MyGitHub\MySimpleNotes\obj\Debug\MySimpleNotes.exe
 F:\MyGitHub\MySimpleNotes\obj\Debug\MySimpleNotes.pdb
-F:\MyGitHub\MySimpleNotes\obj\Debug\MySimpleNotes.csprojAssemblyReference.cache
