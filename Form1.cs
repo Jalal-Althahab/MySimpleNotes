@@ -104,25 +104,29 @@ namespace MySimpleNotes
 
         private void richTextBox1_DoubleClick(object sender, EventArgs e)
         {
-            try
-            {
-                this.MySaving();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            //try
+            //{
+            //    this.MySaving();
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
         }
 
 
         private void richTextBox1_KeyUp(object sender, KeyEventArgs e)
         {
+            //to Save and Exit
             if (e.KeyData == Keys.Escape)
             {
-                //this.richTextBox1_DoubleClick(sender, e);
-                // then close the app 
-                //Application.Exit();
                 this.MySaving();
+            }
+            //to change the style of the SelectionText ...
+            else if (e.KeyData == Keys.ShiftKey)
+            {          
+                this.richTextBox1.SelectionColor = Color.Gray;
+                this.richTextBox1.SelectionFont = new Font(this.richTextBox1.SelectionFont, FontStyle.Strikeout);
             }
         }
         private void MoveCursor()
