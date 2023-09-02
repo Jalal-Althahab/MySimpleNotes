@@ -15,6 +15,7 @@ namespace MySimpleNotes
     {
         static readonly string myPath = @"C:\MySimpleNotes\MySimpleNotes_AllText.txt";
         static readonly string myLastLocation = @"C:\MySimpleNotes\MySimpleNotes_LastLocation.txt";
+        static readonly string myStyle = @"C:\MySimpleNotes\MyStyle.txt";
 
         public Form1()
         {
@@ -35,14 +36,15 @@ namespace MySimpleNotes
                 if (File.Exists(myPath))
                 {
                     this.richTextBox1.Text = "" + ImportDataFromTXT(myPath);
-                    //Get start from last text point...
-                    this.richTextBox1.SelectionStart=this.richTextBox1.TextLength;
                     //get last location
                     string lastLocationText = ImportDataFromTXT(myLastLocation).Split('|')[0];
                     this.Location = new Point(int.Parse(lastLocationText.Split(',')[0]), int.Parse(lastLocationText.Split(',')[1]));
                     //get last form size
                     string lastFormSizeText = ImportDataFromTXT(myLastLocation).Split('|')[1];
                     this.MainFormSize(lastFormSizeText.Split(',')[0], lastFormSizeText.Split(',')[1]);
+                    //get text style
+                    //string styleOfSelectedText = ImportDataFromTXT(myStyle).Split('|');
+                    this.StyleSave(true);
                 }
                 else
                 {
@@ -104,16 +106,27 @@ namespace MySimpleNotes
 
         private void richTextBox1_DoubleClick(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    this.MySaving();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
+
         }
 
+        private void StyleSave(bool bit)
+        {
+            if (bit)
+            {
+                //get last selectedText style
+                string tempText = this.ImportDataFromTXT(myStyle);
+                this.richTextBox1.Select(int.Parse(tempText.Split('|')[0]), int.Parse(tempText.Split('|')[1]));
+            }        
+            else
+            {    //save last selectedText style
+                this.ExportDataToTXT(("" + this.richTextBox1.SelectionStart + "|" + this.richTextBox1.SelectedText.Length), myStyle);
+            }
+            //and do it now :)
+            this.richTextBox1.SelectionColor = Color.Gray;
+            this.richTextBox1.SelectionFont = new Font(this.richTextBox1.SelectionFont, FontStyle.Strikeout);
+            //Get start from last text point...
+            this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
+        }
 
         private void richTextBox1_KeyUp(object sender, KeyEventArgs e)
         {
@@ -124,9 +137,13 @@ namespace MySimpleNotes
             }
             //to change the style of the SelectionText ...
             else if (e.KeyData == Keys.ShiftKey)
-            {          
-                this.richTextBox1.SelectionColor = Color.Gray;
-                this.richTextBox1.SelectionFont = new Font(this.richTextBox1.SelectionFont, FontStyle.Strikeout);
+            {
+                if (this.richTextBox1.SelectedText.Trim().Length > 0)
+                {
+                    // MessageBox.Show("Text Length:" + this.richTextBox1.SelectedText.Length);
+                    this.StyleSave(false);
+                }       
+
             }
         }
         private void MoveCursor()
