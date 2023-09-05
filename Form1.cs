@@ -51,6 +51,7 @@ namespace MySimpleNotes
                     //create text files
                     ExportDataToTXT(this.richTextBox1.Text, myPath);
                     ExportDataToTXT(("" + this.Location.X + "," + this.Location.Y + "|" + this.Width + "," + this.Height), myLastLocation);
+                    ExportDataToTXT("", myStyle);
                 }
             }
             catch (Exception ex)
@@ -109,21 +110,40 @@ namespace MySimpleNotes
 
         }
 
-        private void StyleSave(bool bit)
+        private void DoIt()
         {
-            if (bit)
-            {
-                //get last selectedText style
-                string tempText = this.ImportDataFromTXT(myStyle);
-                this.richTextBox1.Select(int.Parse(tempText.Split('|')[0]), int.Parse(tempText.Split('|')[1]));
-            }        
-            else
-            {    //save last selectedText style
-                this.ExportDataToTXT(("" + this.richTextBox1.SelectionStart + "|" + this.richTextBox1.SelectedText.Length), myStyle);
-            }
             //and do it now :)
             this.richTextBox1.SelectionColor = Color.Gray;
             this.richTextBox1.SelectionFont = new Font(this.richTextBox1.SelectionFont, FontStyle.Strikeout);
+        }
+
+        private void StyleSave(bool bit)
+        {
+            //get last selectedText style
+            string tempText = this.ImportDataFromTXT(myStyle);
+            if (bit)
+            {
+                foreach (var item in tempText.Split('#'))
+                {
+                 //   MessageBox.Show("item:" + item.Split('|')[0]);
+                   this.richTextBox1.Select(int.Parse(item.Split('|')[0]), int.Parse(item.Split('|')[1]));
+                    //and do it now :)
+                    this.DoIt();
+                }
+            }        
+            else
+            {    //save last selectedText style
+                if(tempText.Length>0)
+                   this.ExportDataToTXT((tempText+"#" + this.richTextBox1.SelectionStart + "|" + this.richTextBox1.SelectedText.Length), myStyle);
+                else 
+                   this.ExportDataToTXT(("" + this.richTextBox1.SelectionStart + "|" + this.richTextBox1.SelectedText.Length), myStyle);
+
+                //and do it now :)
+                this.DoIt();
+              }
+            //and do it now :)
+            //this.richTextBox1.SelectionColor = Color.Gray;
+            //this.richTextBox1.SelectionFont = new Font(this.richTextBox1.SelectionFont, FontStyle.Strikeout);
             //Get start from last text point...
             this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
         }
