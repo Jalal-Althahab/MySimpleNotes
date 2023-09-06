@@ -116,7 +116,12 @@ namespace MySimpleNotes
             this.richTextBox1.SelectionColor = Color.Gray;
             this.richTextBox1.SelectionFont = new Font(this.richTextBox1.SelectionFont, FontStyle.Strikeout);
         }
-
+        private void DoItInvers()
+        {
+            //and do it now :)
+            this.richTextBox1.SelectionColor = Color.White;
+            this.richTextBox1.SelectionFont = new Font(this.richTextBox1.SelectionFont, FontStyle.Regular);
+        }
         private void StyleSave(bool bit)
         {
             //get last selectedText style
@@ -132,14 +137,34 @@ namespace MySimpleNotes
                 }
             }        
             else
-            {    //save last selectedText style
-                if(tempText.Length>0)
-                   this.ExportDataToTXT((tempText+"#" + this.richTextBox1.SelectionStart + "|" + this.richTextBox1.SelectedText.Length), myStyle);
-                else 
-                   this.ExportDataToTXT(("" + this.richTextBox1.SelectionStart + "|" + this.richTextBox1.SelectedText.Length), myStyle);
+            {
+                bool testStart = false;
+                foreach (var item in tempText.Split('#'))
+                {       
+                   // this.richTextBox1.Select(int.Parse(item.Split('|')[0]), int.Parse(item.Split('|')[1]));
+                    if((int.Parse(item.Split('|')[0])) == this.richTextBox1.SelectionStart)
+                    {
+                        testStart = true;
+                    }
+                }
 
-                //and do it now :)
-                this.DoIt();
+                if (testStart == false)
+                {
+                    //save last selectedText style
+                    if (tempText.Length > 0)
+                        this.ExportDataToTXT((tempText + "#" + this.richTextBox1.SelectionStart + "|" + this.richTextBox1.SelectedText.Length), myStyle);
+                    else
+                        this.ExportDataToTXT(("" + this.richTextBox1.SelectionStart + "|" + this.richTextBox1.SelectedText.Length), myStyle);
+
+                    //and do it now :)
+                    this.DoIt();
+                }
+                else
+                {
+                    //and do it now invers :)
+                    this.DoItInvers();
+                }
+
               }
             //and do it now :)
             //this.richTextBox1.SelectionColor = Color.Gray;

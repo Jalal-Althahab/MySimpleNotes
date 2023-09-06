@@ -10,4 +10,3 @@ F:\MyGitHub\MySimpleNotes\obj\Debug\MySimpleNotes.exe.manifest
 F:\MyGitHub\MySimpleNotes\obj\Debug\MySimpleNotes.application
 F:\MyGitHub\MySimpleNotes\obj\Debug\MySimpleNotes.exe
 F:\MyGitHub\MySimpleNotes\obj\Debug\MySimpleNotes.pdb
-F:\MyGitHub\MySimpleNotes\obj\Debug\MySimpleNotes.csprojAssemblyReference.cache
