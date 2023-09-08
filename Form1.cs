@@ -28,6 +28,7 @@ namespace MySimpleNotes
         {
             try
             {
+               
                 //for first timp 
                 if (!System.IO.Directory.Exists(@"C:\MySimpleNotes\MySimpleNotes_AllText.txt"))
                     System.IO.Directory.CreateDirectory(@"C:\MySimpleNotes");
@@ -139,12 +140,17 @@ namespace MySimpleNotes
             else
             {
                 bool testStart = false;
+                string testTempText = "";
                 foreach (var item in tempText.Split('#'))
                 {       
                    // this.richTextBox1.Select(int.Parse(item.Split('|')[0]), int.Parse(item.Split('|')[1]));
                     if((int.Parse(item.Split('|')[0])) == this.richTextBox1.SelectionStart)
                     {
                         testStart = true;
+                    }
+                    else
+                    {
+                        testTempText += item + "#";
                     }
                 }
 
@@ -161,6 +167,8 @@ namespace MySimpleNotes
                 }
                 else
                 {
+                   testTempText= testTempText.Substring(0,(testTempText.Length-1));
+                    this.ExportDataToTXT((testTempText), myStyle);
                     //and do it now invers :)
                     this.DoItInvers();
                 }
