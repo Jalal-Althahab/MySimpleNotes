@@ -174,11 +174,11 @@ namespace MySimpleNotes
                 }
 
               }
-            //and do it now :)
-            //this.richTextBox1.SelectionColor = Color.Gray;
-            //this.richTextBox1.SelectionFont = new Font(this.richTextBox1.SelectionFont, FontStyle.Strikeout);
+
             //Get start from last text point...
-            this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;
+            this.richTextBox1.SelectionStart = this.richTextBox1.TextLength;  
+            //rest the style
+            this.DoItInvers();
         }
 
         private void richTextBox1_KeyUp(object sender, KeyEventArgs e)
