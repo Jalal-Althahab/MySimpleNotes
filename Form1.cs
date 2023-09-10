@@ -127,8 +127,10 @@ namespace MySimpleNotes
         {
             //get last selectedText style
             string tempText = this.ImportDataFromTXT(myStyle);
-            if (bit)
+
+            if (bit ==true)
             {
+                if(tempText.Length>1)
                 foreach (var item in tempText.Split('#'))
                 {
                  //   MessageBox.Show("item:" + item.Split('|')[0]);
@@ -141,12 +143,18 @@ namespace MySimpleNotes
             {
                 bool testStart = false;
                 string testTempText = "";
+                int tempIndex = 0;
+                int trueIndex = 0;
+                
+                if(tempText.Length>1)
                 foreach (var item in tempText.Split('#'))
-                {       
-                   // this.richTextBox1.Select(int.Parse(item.Split('|')[0]), int.Parse(item.Split('|')[1]));
+                {
+                    //size of array tempText
+                    tempIndex++;
                     if((int.Parse(item.Split('|')[0])) == this.richTextBox1.SelectionStart)
                     {
                         testStart = true;
+                        trueIndex = tempIndex;
                     }
                     else
                     {
@@ -167,7 +175,11 @@ namespace MySimpleNotes
                 }
                 else
                 {
-                   testTempText= testTempText.Substring(0,(testTempText.Length-1));
+                   if(trueIndex != tempText.Split('#').Length)
+                    {
+                        testTempText = testTempText.Substring(0, (testTempText.Length - 1));
+                    }
+                
                     this.ExportDataToTXT((testTempText), myStyle);
                     //and do it now invers :)
                     this.DoItInvers();
