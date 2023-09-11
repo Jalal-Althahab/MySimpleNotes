@@ -175,7 +175,7 @@ namespace MySimpleNotes
                 }
                 else
                 {
-                   if(trueIndex != tempText.Split('#').Length)
+                   if(trueIndex != tempText.Split('#').Length || (tempText.Split('#').Length > 1 ))
                     {
                         testTempText = testTempText.Substring(0, (testTempText.Length - 1));
                     }
