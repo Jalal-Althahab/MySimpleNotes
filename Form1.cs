@@ -175,7 +175,8 @@ namespace MySimpleNotes
                 }
                 else
                 {
-                   if(trueIndex != tempText.Split('#').Length || (tempText.Split('#').Length > 1 ))
+                    //if the style list > 1 then delete last '#'
+                   if((tempText.Split('#').Length > 1 ))
                     {
                         testTempText = testTempText.Substring(0, (testTempText.Length - 1));
                     }
