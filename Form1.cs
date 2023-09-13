@@ -43,8 +43,7 @@ namespace MySimpleNotes
                     //get last form size
                     string lastFormSizeText = ImportDataFromTXT(myLastLocation).Split('|')[1];
                     this.MainFormSize(lastFormSizeText.Split(',')[0], lastFormSizeText.Split(',')[1]);
-                    //get text style
-                    //string styleOfSelectedText = ImportDataFromTXT(myStyle).Split('|');
+                    //get text style                
                     this.StyleSave(true);
                 }
                 else
@@ -250,8 +249,7 @@ namespace MySimpleNotes
         private void richTextBox1_KeyPress(object sender, KeyPressEventArgs e)
         {    // '1245203' this is a HashCode value of (ControlKey+S) at same time.
             if (e.KeyChar.GetHashCode() == (1245203))
-            {
-                // this.richTextBox1_DoubleClick(sender, e);        
+            {      
                 this.MySaving();
             }
             //maximize font size (ShiftKey & '+') == (2818091)
