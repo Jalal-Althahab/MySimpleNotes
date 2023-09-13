@@ -105,11 +105,6 @@ namespace MySimpleNotes
             }
         }
 
-        private void richTextBox1_DoubleClick(object sender, EventArgs e)
-        {
-
-        }
-
         private void DoIt()
         {
             //and do it now :)
