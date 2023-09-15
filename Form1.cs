@@ -215,7 +215,6 @@ namespace MySimpleNotes
                     // MessageBox.Show("Text Length:" + this.richTextBox1.SelectedText.Length);
                     this.StyleSave(false);
                 }       
-
             }
         }
         private void MoveCursor()
@@ -242,6 +241,11 @@ namespace MySimpleNotes
             {
                 // save last location and last form size to text file
                 this.ExportDataToTXT(("" + this.Location.X + "," + this.Location.Y+"|"+this.Width+","+this.Height), myLastLocation);
+            }
+
+            if (e.Button == MouseButtons.Right)
+            {       //show the menu strrip on the cursor click    
+                this.contextMenuStrip1.Show(Cursor.Position.X, Cursor.Position.Y);
             }
         }
 
@@ -275,6 +279,14 @@ namespace MySimpleNotes
             if (e.CloseReason.ToString() == "UserClosing")
             {
                 this.MySaving();
+            }
+        }
+
+        private void doneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.richTextBox1.SelectedText.Trim().Length > 0)
+            {
+                this.StyleSave(false);
             }
         }
     }
