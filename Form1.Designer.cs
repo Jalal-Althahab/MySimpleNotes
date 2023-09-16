@@ -76,8 +76,9 @@ namespace MySimpleNotes
             // undoneToolStripMenuItem
             // 
             this.undoneToolStripMenuItem.Name = "undoneToolStripMenuItem";
-            this.undoneToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.undoneToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.undoneToolStripMenuItem.Text = "undone";
+            this.undoneToolStripMenuItem.Click += new System.EventHandler(this.undoneToolStripMenuItem_Click);
             // 
             // Form1
             // 
