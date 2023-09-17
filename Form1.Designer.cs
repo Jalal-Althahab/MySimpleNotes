@@ -34,7 +34,6 @@ namespace MySimpleNotes
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.doneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.undoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,25 +59,19 @@ namespace MySimpleNotes
             // 
             // contextMenuStrip1
             // 
+            this.contextMenuStrip1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.doneToolStripMenuItem,
-            this.undoneToolStripMenuItem});
+            this.doneToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 70);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 48);
             // 
             // doneToolStripMenuItem
             // 
+            this.doneToolStripMenuItem.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.doneToolStripMenuItem.Name = "doneToolStripMenuItem";
             this.doneToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.doneToolStripMenuItem.Text = "done";
+            this.doneToolStripMenuItem.Text = "ChangeState";
             this.doneToolStripMenuItem.Click += new System.EventHandler(this.doneToolStripMenuItem_Click);
-            // 
-            // undoneToolStripMenuItem
-            // 
-            this.undoneToolStripMenuItem.Name = "undoneToolStripMenuItem";
-            this.undoneToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.undoneToolStripMenuItem.Text = "undone";
-            this.undoneToolStripMenuItem.Click += new System.EventHandler(this.undoneToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -106,7 +99,6 @@ namespace MySimpleNotes
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem doneToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem undoneToolStripMenuItem;
     }
 }
 

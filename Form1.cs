@@ -289,13 +289,5 @@ namespace MySimpleNotes
                 this.StyleSave(false);
             }
         }
-
-        private void undoneToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (this.richTextBox1.SelectedText.Trim().Length > 0)
-            {
-                this.StyleSave(false);
-            }
-        }
     }
 }
