@@ -94,10 +94,9 @@ namespace MySimpleNotes
 
         public void ExportDataToTXT(string op, string path)
         {
-            var csv = new System.Text.StringBuilder();
-            csv.Append(op);
-            // csv.Replace(',', ';');
-            File.WriteAllText((path), csv.ToString(), Encoding.Default);
+            var txt = new System.Text.StringBuilder();
+            txt.Append(op);
+            File.WriteAllText((path), txt.ToString(), Encoding.Default);
         }
 
         private void MySaving()
@@ -212,7 +211,6 @@ namespace MySimpleNotes
             {
                 if (this.richTextBox1.SelectedText.Trim().Length > 0)
                 {
-                    // MessageBox.Show("Text Length:" + this.richTextBox1.SelectedText.Length);
                     this.StyleSave(false);
                 }       
             }
@@ -263,9 +261,6 @@ namespace MySimpleNotes
             {      
                 this.MySaving();
             }
-            //maximize font size (ShiftKey & '+') == (2818091)
-            //minimize font size (ShiftKey & '-')== (6226015)         
-            // MessageBox.Show("HashCode:" + e.KeyChar.GetHashCode());
         }
 
         //restore the form size 
