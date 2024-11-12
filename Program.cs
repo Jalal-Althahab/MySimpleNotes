@@ -94,7 +94,7 @@ namespace MySimpleNotes
             try
             {
                 System.IO.File.AppendAllText(filePath, link + Environment.NewLine);
-                Console.WriteLine($"Link saved: {link}");
+               // Console.WriteLine($"Link saved: {link}");
             }
             catch (Exception ex)
             {
