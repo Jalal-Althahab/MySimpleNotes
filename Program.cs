@@ -13,6 +13,8 @@ namespace MySimpleNotes
         private static readonly string filePath = @"C:\MySimpleNotes\MySimpleNotes_AllText.txt";
         private static bool isRunning = true;
 
+        public static event Action<string> LinkSaved;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -27,6 +29,7 @@ namespace MySimpleNotes
 
             Form1 mainForm = new Form1();
             mainForm.FormClosing += (sender, e) => { isRunning = false; }; // Stop the thread on form closing
+            LinkSaved += mainForm.OnLinkSaved; // Subscribe to the LinkSaved event
             Application.Run(mainForm);
         }
 
@@ -51,10 +54,12 @@ namespace MySimpleNotes
                                 //if (result == DialogResult.Yes)
                                 //{
                                 //    SaveLink(clipboardText);
+                                //    LinkSaved?.Invoke(clipboardText); // Raise the event
                                 //}
 
-                                //Auto Save Without Asking
+                                //Auto save the new link
                                 SaveLink(clipboardText);
+                                LinkSaved?.Invoke(clipboardText); // Raise the event
                             }
                         }
                     }
@@ -97,7 +102,7 @@ namespace MySimpleNotes
             try
             {
                 System.IO.File.AppendAllText(filePath, link + Environment.NewLine);
-               // Console.WriteLine($"Link saved: {link}");
+                Console.WriteLine($"Link saved: {link}");
             }
             catch (Exception ex)
             {

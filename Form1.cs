@@ -21,6 +21,7 @@ namespace MySimpleNotes
         {
             InitializeComponent();
             this.MyInitialize();
+            Program.LinkSaved += OnLinkSaved; // Subscribe to the LinkSaved event
         }
 
 
@@ -64,13 +65,29 @@ namespace MySimpleNotes
                     ExportDataToTXT(this.richTextBox1.Text, myPath);
                     ExportDataToTXT(("" + this.Location.X + "," + this.Location.Y + "|" + this.Width + "," + this.Height), myLastLocation);
                     ExportDataToTXT("", myStyle);
-                }
+                }    
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
+
+        //This method appends the new link to richTextBox1
+        public void OnLinkSaved(string link)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => OnLinkSaved(link)));
+                return;
+            }
+
+            if (!this.richTextBox1.Text.Contains(link))
+            {
+                this.richTextBox1.AppendText(link + Environment.NewLine); // Append the new link if it's not already present
+            }
+        }
+
 
 
         public string ImportDataFromTXT(string path)
@@ -272,8 +289,9 @@ namespace MySimpleNotes
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason.ToString() == "UserClosing")
-            {
-                this.MySaving();
+            { 
+                    Program.LinkSaved -= OnLinkSaved; // Unsubscribe from the LinkSaved event
+                    this.MySaving();
             }
         }
 
