@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MySimpleNotes.exe" size="63456">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MySimpleNotes.exe" size="64512">
       <assemblyIdentity name="MySimpleNotes" version="0.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>H9iWrzok+GFYW/rwSu7wU/ZVy+sxvOiWNltzlS7wkLk=</dsig:DigestValue>
+        <dsig:DigestValue>q7GhxK9LWFDceYGhdS5pX9NZ1SuNiLxRU3+MpDBVnO4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
