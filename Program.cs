@@ -46,12 +46,15 @@ namespace MySimpleNotes
 
                             if (!IsLinkInFile(clipboardText))
                             {
-                                DialogResult result = MessageBox.Show($"Do you want to save this link?\n{clipboardText}", "New Link Detected", MessageBoxButtons.YesNo);
+                                //DialogResult result = MessageBox.Show($"Do you want to save this link?\n{clipboardText}", "New Link Detected", MessageBoxButtons.YesNo);
 
-                                if (result == DialogResult.Yes)
-                                {
-                                    SaveLink(clipboardText);
-                                }
+                                //if (result == DialogResult.Yes)
+                                //{
+                                //    SaveLink(clipboardText);
+                                //}
+
+                                //Auto Save Without Asking
+                                SaveLink(clipboardText);
                             }
                         }
                     }
