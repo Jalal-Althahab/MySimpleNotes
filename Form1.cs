@@ -48,16 +48,16 @@ namespace MySimpleNotes
                     this.StyleSave(true);
 
                     //get the clipboard text and catch any url
-                    string clipboardText= Clipboard.GetText();
-                    if (clipboardText.Length > 1)
-                    {
-                        if (clipboardText.Contains("http"))
-                        {
-                            if(this.richTextBox1.Text.Contains(clipboardText)==false)
-                            this.richTextBox1.Text += "\n" + clipboardText;
-                        }           
-                    }
-                    
+                    //string clipboardText = Clipboard.GetText();
+                    //if (clipboardText.Length > 1)
+                    //{
+                    //    if (clipboardText.Contains("http"))
+                    //    {
+                    //        if (this.richTextBox1.Text.Contains(clipboardText) == false)
+                    //            this.richTextBox1.Text += "\n" + clipboardText;
+                    //    }
+                    //}
+
                 }
                 else
                 {

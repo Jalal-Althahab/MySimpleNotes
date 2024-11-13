@@ -21,6 +21,7 @@ namespace MySimpleNotes
         [STAThread]
         static void Main()
         {
+           // Clipboard.Clear();
             Thread clipboardThread = new Thread(ClipboardMonitor);
             clipboardThread.SetApartmentState(ApartmentState.STA); // Set the thread to STA
             clipboardThread.Start();
@@ -58,7 +59,7 @@ namespace MySimpleNotes
                                 //}
 
                                 //Auto save the new link
-                                SaveLink(clipboardText);
+                               // SaveLink(clipboardText);
                                 LinkSaved?.Invoke(clipboardText); // Raise the event
                             }
                         }
