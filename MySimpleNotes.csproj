@@ -91,7 +91,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="MySimpleNotes_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
