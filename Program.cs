@@ -21,7 +21,9 @@ namespace MySimpleNotes
         [STAThread]
         static void Main()
         {
-           // Clipboard.Clear();
+            //clean the old text from clipboard befoure starting the app
+            Clipboard.Clear();
+
             Thread clipboardThread = new Thread(ClipboardMonitor);
             clipboardThread.SetApartmentState(ApartmentState.STA); // Set the thread to STA
             clipboardThread.Start();
