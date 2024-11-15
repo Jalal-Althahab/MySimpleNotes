@@ -1,0 +1,93 @@
+# Ignore Visual Studio temporary files, build results, and
+# Includes Office plugin and template projects
+.vscode/
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Ignore bin and obj folders
+bin/
+obj/
+
+# Windows image file caches
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Files that might appear in the root of a volume
+Documents and Settings/
+RECYCLER/
+System Volume Information/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# Ignore build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Ll]og/
+[Ll]ogs/
+
+# Ignore NuGet Packages
+*.nupkg
+**/packages/*
+!**/packages/build/
+!.nuget/packages.config
+
+# Ignore extensions
+*.nupkg
+*.snupkg
+*.nuspec
+
+# Ignore Publish folder
+[Pp]ublish/
+out/
+
+# Ignore build results of an MSBuild Project
+_build/
+_buildpublic/
+artifacts/
+.bundle/
+
+# Ignore temporary files
+*.tmp
+*.temp
+*.cache
+*.config
+*.pdb
+*.ilk
+*.log
+*.vspscc
+
+# Ignore SDK artifacts
+*_Sdk.sln
+
+# Visual Studio Code files
+.vscode/
+*.code-workspace
+*.codesnippets
+
+# Rider project files
+.idea/
+*.sln.iml
