@@ -84,10 +84,23 @@ namespace MySimpleNotes
 
             if (!this.richTextBox1.Text.Contains(link))
             {
+                // To make sure we but the link on new line
+                this.CheckForNewLine();
+
                 this.richTextBox1.AppendText(link + Environment.NewLine); // Append the new link if it's not already present
             }
         }
 
+        private void CheckForNewLine()
+        {
+             // Check if the last character is a newline
+            if (richTextBox1.Text.Length > 0 && richTextBox1.Text[richTextBox1.Text.Length - 1] != '\n')
+            {
+               // MessageBox.Show("yes");
+                // Add a newline if necessary
+                richTextBox1.AppendText(Environment.NewLine);
+            }
+        }
 
 
         public string ImportDataFromTXT(string path)
