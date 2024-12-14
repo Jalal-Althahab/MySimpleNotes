@@ -79,7 +79,7 @@ namespace MySimpleNotes
             if (InvokeRequired)
             {
                 Invoke(new Action(() => OnLinkSaved(link)));
-                return;
+               // return;
             }
 
             if (!this.richTextBox1.Text.Contains(link))

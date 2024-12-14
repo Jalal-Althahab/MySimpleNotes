@@ -60,9 +60,11 @@ namespace MySimpleNotes
                                 //    LinkSaved?.Invoke(clipboardText); // Raise the event
                                 //}
 
+
                                 //Auto save the new link
-                               // SaveLink(clipboardText);
+                                // SaveLink(clipboardText);
                                 LinkSaved?.Invoke(clipboardText); // Raise the event
+                                
                             }
                         }
                     }
