@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.LinkLabel;
 
 namespace MySimpleNotes
 {
@@ -82,12 +83,40 @@ namespace MySimpleNotes
                // return;
             }
 
-            if (!this.richTextBox1.Text.Contains(link))
+            if (CheckMultiUrls(link))
+            {
+                return;
+            }
+            else
+            {
+                SetTheSingleLine(link);          
+            }
+
+        }
+
+        private void SetTheSingleLine(string line)
+        {
+            if (!CheckSingleLine(line))
             {
                 // To make sure we but the link on new line
                 this.CheckForNewLine();
-
-                this.richTextBox1.AppendText(link + Environment.NewLine); // Append the new link if it's not already present
+                this.richTextBox1.AppendText(line + Environment.NewLine); // Append the new link if it's not already present
+            }
+        }
+        private bool CheckSingleLine(string singleLine)
+        {
+            return this.richTextBox1.Text.Contains(singleLine);
+        }
+        private bool CheckMultiUrls(string textClip)
+        {
+            // Check if the last character is a newline
+            if (textClip.Split('\n').Length > 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
