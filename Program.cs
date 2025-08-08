@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MySimpleNotes
@@ -10,29 +7,32 @@ namespace MySimpleNotes
     static class Program
     {
         private static string lastClipboardText = string.Empty;
-        private static readonly string filePath = @"C:\MySimpleNotes\MySimpleNotes_AllText.txt";
         private static bool isRunning = true;
 
+        // The event that the Form will subscribe to.
         public static event Action<string> LinkSaved;
 
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            //clean the old text from clipboard befoure starting the app
-            Clipboard.Clear();
+            // Clean the clipboard once at the start.
+            try { Clipboard.Clear(); } catch { }
 
+            // Start the background thread to monitor the clipboard.
             Thread clipboardThread = new Thread(ClipboardMonitor);
-            clipboardThread.SetApartmentState(ApartmentState.STA); // Set the thread to STA
+            clipboardThread.SetApartmentState(ApartmentState.STA);
+            clipboardThread.IsBackground = true;
             clipboardThread.Start();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Form1 mainForm = new Form1();
-            mainForm.FormClosing += (sender, e) => { isRunning = false; }; // Stop the thread on form closing
-            LinkSaved += mainForm.OnLinkSaved; // Subscribe to the LinkSaved event
+            // Create and run the main form.
+            var mainForm = new MainForm();
+
+            // Set up a handler to stop the background thread when the form truly closes.
+            mainForm.FormClosed += (sender, e) => { isRunning = false; };
+
             Application.Run(mainForm);
         }
 
@@ -46,35 +46,21 @@ namespace MySimpleNotes
                     {
                         string clipboardText = Clipboard.GetText();
 
-                        if (IsValidUrl(clipboardText) && clipboardText != lastClipboardText)
+                        // Check if it's a new, valid URL.
+                        if (clipboardText != lastClipboardText && IsValidUrl(clipboardText))
                         {
                             lastClipboardText = clipboardText;
-
-                            if (!IsLinkInFile(clipboardText))
-                            {
-                                //DialogResult result = MessageBox.Show($"Do you want to save this link?\n{clipboardText}", "New Link Detected", MessageBoxButtons.YesNo);
-
-                                //if (result == DialogResult.Yes)
-                                //{
-                                //    SaveLink(clipboardText);
-                                //    LinkSaved?.Invoke(clipboardText); // Raise the event
-                                //}
-
-
-                                //Auto save the new link
-                                // SaveLink(clipboardText);
-                                LinkSaved?.Invoke(clipboardText); // Raise the event
-                                
-                            }
+                            // Fire the event to notify the UI thread.
+                            LinkSaved?.Invoke(clipboardText);
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    Console.WriteLine("Error accessing clipboard: " + ex.Message);
+                    // Ignore clipboard errors which can happen if another app has it locked.
                 }
 
-                Thread.Sleep(1000); // Check clipboard every second
+                Thread.Sleep(1000); // Check every second.
             }
         }
 
@@ -82,37 +68,6 @@ namespace MySimpleNotes
         {
             return Uri.TryCreate(url, UriKind.Absolute, out Uri uriResult)
                    && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
-        }
-
-        private static bool IsLinkInFile(string link)
-        {
-            try
-            {
-                if (System.IO.File.Exists(filePath))
-                {
-                    var lines = System.IO.File.ReadAllLines(filePath);
-                    return lines.Contains(link);
-                }
-                return false;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error reading file: " + ex.Message);
-                return false;
-            }
-        }
-
-        private static void SaveLink(string link)
-        {
-            try
-            {
-                System.IO.File.AppendAllText(filePath, link + Environment.NewLine);
-                Console.WriteLine($"Link saved: {link}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error saving link: " + ex.Message);
-            }
         }
     }
 }
