@@ -91,3 +91,7 @@ artifacts/
 # Rider project files
 .idea/
 *.sln.iml
+
+# Ignore build output folders
+bin/
+obj/

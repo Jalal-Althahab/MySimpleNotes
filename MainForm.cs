@@ -12,6 +12,7 @@ namespace MySimpleNotes
     {
         private AppSettings _settings;
         private Panel _lastCopiedUrlPanel = null;
+        private bool _areUrlsRendered = false;
 
         public MainForm()
         {
@@ -31,6 +32,7 @@ namespace MySimpleNotes
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
+        // *** RESTORED THIS METHOD TO FIX THE DESIGNER ERROR ***
         private void richTextBox1_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
@@ -51,7 +53,6 @@ namespace MySimpleNotes
         private void MainForm_Load(object sender, EventArgs e)
         {
             LoadAllSettings();
-            RenderUrlBoxes();
             EnableMouseWheelFun();
             SetupNotifyIcon();
         }
@@ -64,8 +65,16 @@ namespace MySimpleNotes
             }
         }
 
-        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        // *** MODIFIED TO BE ASYNC ***
+        private async void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // --- ASYNC LAZY LOADING LOGIC ---
+            if (tabControl1.SelectedTab == tabPage2 && !_areUrlsRendered)
+            {
+                await RenderUrlBoxesAsync(); // Await the non-blocking version
+                _areUrlsRendered = true;
+            }
+
             if (tabControl1.SelectedTab == tabPage2)
             {
                 RefreshTheFormStyle();
@@ -99,7 +108,6 @@ namespace MySimpleNotes
                 tabControl1.SelectedIndex = _settings.LastTabIndex;
             }
 
-            RenderUrlBoxes();
             UpdateTabButtonStyles();
         }
 
@@ -172,6 +180,7 @@ namespace MySimpleNotes
                         var importedSettings = JsonSerializer.Deserialize<AppSettings>(jsonToImport);
                         if (importedSettings == null) { throw new JsonException("The selected file is not a valid settings file or is empty."); }
                         File.WriteAllText(SettingsManager.FilePath, jsonToImport);
+                        _areUrlsRendered = false;
                         LoadAllSettings();
                         MessageBox.Show("Data imported successfully!\nYour notes and URLs have been updated.", "Import Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -183,7 +192,6 @@ namespace MySimpleNotes
         #endregion
 
         #region System Tray (NotifyIcon) Logic
-
         private void ShowAndFocusForm()
         {
             this.Show();
@@ -205,6 +213,39 @@ namespace MySimpleNotes
 
         #region URL Handling
 
+        // *** NEW ASYNC VERSION ***
+        // This builds the UI without freezing the application.
+        private async Task RenderUrlBoxesAsync()
+        {
+            lblLoading.Visible = true;
+            flowLayoutPanel1.Visible = false; // Hide panel to prevent flicker
+            flowLayoutPanel1.SuspendLayout();
+            flowLayoutPanel1.Controls.Clear();
+            _lastCopiedUrlPanel = null;
+
+            int batchSize = 25; // Render 25 controls before pausing
+            int count = 0;
+
+            foreach (UrlEntry entry in _settings.SavedUrls.OrderByDescending(e => e.SavedAt))
+            {
+                AddUrlBox(entry);
+                count++;
+                if (count % batchSize == 0)
+                {
+                    // This is the key: it pauses the loop for a tiny moment,
+                    // allowing the UI to process events (like repainting)
+                    // and stay responsive.
+                    await Task.Delay(1);
+                }
+            }
+
+            flowLayoutPanel1.ResumeLayout(true);
+            lblLoading.Visible = false;
+            flowLayoutPanel1.Visible = true;
+        }
+
+        // This is now only used for testing or a full synchronous reload if ever needed.
+        // It is no longer the primary method for lazy loading.
         private void RenderUrlBoxes()
         {
             _lastCopiedUrlPanel = null;
@@ -225,7 +266,7 @@ namespace MySimpleNotes
             return timestamp.ToString("g");
         }
 
-        private void AddUrlBox(UrlEntry entry)
+        private Panel AddUrlBox(UrlEntry entry)
         {
             int panelWidth = flowLayoutPanel1.ClientSize.Width > 50 ? flowLayoutPanel1.ClientSize.Width - 25 : 50;
             var originalColor = Color.FromArgb(50, 50, 50);
@@ -251,6 +292,7 @@ namespace MySimpleNotes
             urlPanel.Controls.Add(urlLabel);
             urlPanel.Controls.Add(timeLabel);
             flowLayoutPanel1.Controls.Add(urlPanel);
+            return urlPanel;
         }
 
         public void OnLinkSaved(string link)
@@ -260,7 +302,13 @@ namespace MySimpleNotes
             {
                 var newEntry = new UrlEntry { Url = link, SavedAt = DateTime.Now };
                 _settings.SavedUrls.Add(newEntry);
-                RenderUrlBoxes();
+
+                if (_areUrlsRendered)
+                {
+                    Panel newUrlPanel = AddUrlBox(newEntry);
+                    flowLayoutPanel1.Controls.SetChildIndex(newUrlPanel, 0);
+                }
+
                 SaveAllSettings();
                 notifyIcon1.ShowBalloonTip(2000, "URL Captured", link, ToolTipIcon.Info);
                 if (this.Visible) tabControl1.SelectedIndex = 1;
@@ -280,6 +328,7 @@ namespace MySimpleNotes
 
         private void UpdateUrlBoxSizes()
         {
+            if (!_areUrlsRendered) return; // Don't do this if the UI isn't built yet
             flowLayoutPanel1.SuspendLayout();
             foreach (Panel panel in flowLayoutPanel1.Controls.OfType<Panel>())
             {
@@ -324,7 +373,6 @@ namespace MySimpleNotes
         private void MainForm_Resize(object sender, EventArgs e)
         {
             UpdateUrlBoxSizes();
-            // Update button widths on resize to keep them at 50% each
             int halfWidth = pnlTabButtons.ClientSize.Width / 2;
             btnNotesTab.Width = halfWidth;
         }
@@ -366,14 +414,14 @@ namespace MySimpleNotes
             Color inactiveBackColor = Color.FromArgb(45, 45, 48);
             Color inactiveForeColor = Color.LightGray;
 
-            if (tabControl1.SelectedIndex == 0) // Notes tab is active
+            if (tabControl1.SelectedIndex == 0)
             {
                 btnNotesTab.BackColor = activeBackColor;
                 btnNotesTab.ForeColor = activeForeColor;
                 btnUrlsTab.BackColor = inactiveBackColor;
                 btnUrlsTab.ForeColor = inactiveForeColor;
             }
-            else // URLs tab is active
+            else
             {
                 btnNotesTab.BackColor = inactiveBackColor;
                 btnNotesTab.ForeColor = inactiveForeColor;

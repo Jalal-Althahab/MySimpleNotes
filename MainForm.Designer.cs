@@ -18,12 +18,14 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.doneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.lblLoading = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.pnlTabButtons = new System.Windows.Forms.Panel();
@@ -75,8 +77,8 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
@@ -101,6 +103,7 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.DarkSlateGray;
+            this.tabPage2.Controls.Add(this.lblLoading);
             this.tabPage2.Controls.Add(this.flowLayoutPanel1);
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
@@ -108,6 +111,17 @@
             this.tabPage2.Size = new System.Drawing.Size(331, 325);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "URLs";
+            // 
+            // lblLoading
+            // 
+            this.lblLoading.AutoSize = true;
+            this.lblLoading.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLoading.Location = new System.Drawing.Point(115, 150);
+            this.lblLoading.Name = "lblLoading";
+            this.lblLoading.Size = new System.Drawing.Size(111, 24);
+            this.lblLoading.TabIndex = 1;
+            this.lblLoading.Text = "Loading...";
+            this.lblLoading.Visible = false;
             // 
             // flowLayoutPanel1
             // 
@@ -200,6 +214,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.pnlTabButtons.ResumeLayout(false);
             this.pnlTabContent.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -220,5 +235,6 @@
         private System.Windows.Forms.Button btnUrlsTab;
         private System.Windows.Forms.Button btnNotesTab;
         private System.Windows.Forms.Panel pnlTabContent;
+        private System.Windows.Forms.Label lblLoading;
     }
 }
