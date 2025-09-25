@@ -237,6 +237,8 @@ namespace MySimpleNotes
                     // and stay responsive.
                     await Task.Delay(1);
                 }
+                // For showing the count value
+                btnUrlsTab.Text = string.Format("URLs ({0})", count);
             }
 
             flowLayoutPanel1.ResumeLayout(true);
